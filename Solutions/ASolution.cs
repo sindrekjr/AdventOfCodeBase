@@ -5,19 +5,19 @@ using System.Net;
 namespace AdventOfCode.Solutions {
 
     abstract class ASolution {
+
+        // Private lazy fields accessed by public properties
+        Lazy<string> _input, _part1, _part2;
         
         // Public fields
         public int Day;
         public int Year; 
         public string Title;
 
-        // Private lazy fields accessed by public properties
-        private Lazy<string> _input, _part1, _part2;
-
         // Public properties 
         public string Input => _input.Value; 
-        public string Part1 => "Part 1: " + (string.IsNullOrEmpty(_part1.Value) ? "Unsolved" : _part1.Value);
-        public string Part2 => "Part 2: " + (string.IsNullOrEmpty(_part2.Value) ? "Unsolved" : _part2.Value);
+        public string Part1 => string.IsNullOrEmpty(_part1.Value) ? "Unsolved" : _part1.Value;
+        public string Part2 => string.IsNullOrEmpty(_part2.Value) ? "Unsolved" : _part2.Value;
 
         // Constructor
         private protected ASolution(int day, int year, string title) {
@@ -32,23 +32,23 @@ namespace AdventOfCode.Solutions {
         public string Solve(int part = 0) {
             string output = $"--- Day {Day}: {Title} --- \n";
             if(part == 0 || part == 1) {
-                output += $"{Part1}\n"; 
+                output += $"Part 1: {Part1}\n"; 
             }
             if(part == 0 || part == 2) {
-                output += $"{Part2}\n";
+                output += $"Part 2: {Part2}\n";
             }
             return output; 
         }
 
         // Method for retrieving the puzzle input for the given day
-        private string LoadInput() {
+        string LoadInput() {
             string INPUT_FILEPATH = $"./Solutions/Year{Year}/Day{Day.ToString("D2")}/input";
             string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
 
             if(!File.Exists(INPUT_FILEPATH)) {
                 try {
                     using (WebClient client = new WebClient()) {
-                        client.Headers.Add(HttpRequestHeader.Cookie, Program.config.cookie);
+                        client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
                         File.WriteAllText(INPUT_FILEPATH, client.DownloadString(INPUT_URL).Trim());
                     }
                 } catch (WebException e) {
