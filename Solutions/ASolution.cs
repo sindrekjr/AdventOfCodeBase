@@ -16,8 +16,8 @@ namespace AdventOfCode.Solutions {
 
         // Public properties 
         public string Input => _input.Value; 
-        public string Part1 => string.IsNullOrEmpty(_part1.Value) ? "Unsolved" : _part1.Value;
-        public string Part2 => string.IsNullOrEmpty(_part2.Value) ? "Unsolved" : _part2.Value;
+        public string Part1 => string.IsNullOrEmpty(_part1.Value) ? "" : _part1.Value;
+        public string Part2 => string.IsNullOrEmpty(_part2.Value) ? "" : _part2.Value;
 
         // Constructor
         private protected ASolution(int day, int year, string title) {
@@ -29,39 +29,59 @@ namespace AdventOfCode.Solutions {
             _part2 = new Lazy<string>(SolvePartTwo());
         }
 
-        public string Solve(int part = 0) {
+        public void Solve(int part = 0) {
+            bool doOutput = false; 
             string output = $"--- Day {Day}: {Title} --- \n";
-            if(part == 0 || part == 1) {
-                output += $"Part 1: {Part1}\n"; 
+
+            if(part != 2) {
+                if(Part1 != "") {
+                    output += $"Part 1: {Part1}\n"; 
+                    doOutput= true; 
+                } else {
+                    output += "Part 1: Unsolved\n"; 
+                    if(part == 1) doOutput= true; 
+                }
             }
-            if(part == 0 || part == 2) {
-                output += $"Part 2: {Part2}\n";
+            if(part != 1) {
+                if(Part2 != "") {
+                    output += $"Part 2: {Part2}\n";
+                    doOutput= true; 
+                } else {
+                    output += "Part 2: Unsolved\n";
+                    if(part == 2) doOutput= true; 
+                }
             }
-            return output; 
+
+            if(doOutput) Console.WriteLine(output); 
         }
 
         // Method for retrieving the puzzle input for the given day
         string LoadInput() {
             string INPUT_FILEPATH = $"./Solutions/Year{Year}/Day{Day.ToString("D2")}/input";
             string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
+            string input = ""; 
 
-            if(!File.Exists(INPUT_FILEPATH)) {
+            if(File.Exists(INPUT_FILEPATH)) {
+                input = File.ReadAllText(INPUT_FILEPATH);
+            } else {
                 try {
-                    using (WebClient client = new WebClient()) {
+                    using(WebClient client = new WebClient()) {
                         client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
-                        File.WriteAllText(INPUT_FILEPATH, client.DownloadString(INPUT_URL).Trim());
+                        input = client.DownloadString(INPUT_URL).Trim();
+                        File.WriteAllText(INPUT_FILEPATH, input);
                     }
-                } catch (WebException e) {
-                    if (e.Status.Equals(400)) {
-                        Console.WriteLine("Error code 400 when requesting input through web client. Make sure your cookie is configured correctly.");
-                    } else if (e.Status.Equals(404)) {
-                        Console.WriteLine("Error code 404 when requesting input through web client. It might not be available yet.");
+                } catch(WebException e) {
+                    HttpStatusCode statusCode = ((HttpWebResponse) e.Response).StatusCode;
+                    if(statusCode == HttpStatusCode.BadRequest) {
+                        Console.WriteLine($"Day {Day}: Error code 400 when attempting to retrieve puzzle input through the web client. Your session cookie is most likely not recognized.");
+                    } else if(statusCode == HttpStatusCode.NotFound) {
+                        Console.WriteLine($"Day {Day}: Error code 404 when attempting to retrieve puzzle input through the web client. The puzzle is most likely not available yet.");
                     } else {
-                        Console.WriteLine(e.ToString());
+                        Console.WriteLine(e.Status);
                     }
                 }
             }
-            return File.ReadAllText(INPUT_FILEPATH);
+            return input; 
         }
 
         // Abstract methods that must be defined in each instantiated subclass of ASolution
