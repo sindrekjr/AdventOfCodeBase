@@ -5,7 +5,9 @@ using System.Text.Json;
 using System.Text.RegularExpressions; 
 
 namespace AdventOfCode {
+
     class Config {
+
         string _c; 
         int _y;
         int[] _d;
@@ -48,7 +50,7 @@ namespace AdventOfCode {
         }
 
         public static Config Get(string path) {
-            JsonSerializerOptions options = new JsonSerializerOptions(){
+            var options = new JsonSerializerOptions(){
                 IgnoreNullValues = true,
                 PropertyNameCaseInsensitive = true,
                 WriteIndented = true
@@ -69,14 +71,5 @@ namespace AdventOfCode {
             Year = DateTime.Now.Year;
             Days = (DateTime.Now.Month == 12) ? new int[]{DateTime.Now.Day} : new int[]{0}; 
         }
-        
-        public bool Verify() {
-            bool verified = true; 
-            if(string.IsNullOrWhiteSpace(Cookie)) {
-                Console.WriteLine("Config does not contain Advent of Code session cookie."); 
-                verified = false; 
-            }
-            return verified; 
-        } 
     }
 }

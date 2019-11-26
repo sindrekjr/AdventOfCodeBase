@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection; 
 
 namespace AdventOfCode.Solutions {
+    
     class SolutionCollector : IEnumerable<ASolution> {
 
         IEnumerable<ASolution> Solutions;
@@ -29,7 +30,7 @@ namespace AdventOfCode.Solutions {
 
         IEnumerable<ASolution> LoadSolutions(int year, int[] days) {
             if(days.Sum() == 0) {
-                IEnumerable<Type> solutions = Assembly
+                var solutions = Assembly
                     .GetExecutingAssembly()
                     .GetTypes()
                     .Where(type => type.Namespace == $"AdventOfCode.Solutions.Year{year}");
@@ -38,7 +39,7 @@ namespace AdventOfCode.Solutions {
                 }
             } else {
                 foreach(int day in days) {
-                    Type solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day.ToString("D2")}");
+                    var solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day.ToString("D2")}");
                     if(solution != null) {
                         yield return (ASolution) Activator.CreateInstance(solution); 
                     }
