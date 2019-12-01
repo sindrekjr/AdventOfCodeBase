@@ -15,21 +15,13 @@ namespace AdventOfCode {
         public string Cookie { 
             get => _c;
             set {
-                if(Regex.IsMatch(value, "^session=[a-z0-9]+$")) {
-                    _c = value; 
-                } else {
-                    _c = "";
-                }
+                if(Regex.IsMatch(value, "^session=[a-z0-9]+$")) _c = value;
             }
         }
         public int Year { 
             get => _y;
             set {
-                if(value < 2015 || value > DateTime.Now.Year) {
-                    _y = DateTime.Now.Year; 
-                } else {
-                    _y = value; 
-                }
+                if(value >= 2015 && value <= DateTime.Now.Year) _y = value;
             } 
         }
         public int[] Days { 
@@ -48,6 +40,12 @@ namespace AdventOfCode {
                 }
             }
         }
+        
+        void setDefaults() {
+            if(Cookie == default(string)) Cookie = ""; 
+            if(Year == default(int)) Year = DateTime.Now.Year;
+            if(Days == default(int[])) Days = (DateTime.Now.Month == 12) ? new int[]{DateTime.Now.Day} : new int[]{0}; 
+        }
 
         public static Config Get(string path) {
             var options = new JsonSerializerOptions(){
@@ -58,18 +56,13 @@ namespace AdventOfCode {
             Config config; 
             if(File.Exists(path)) {
                 config = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), options);
+                config.setDefaults(); 
             } else {
                 config = new Config();
                 config.setDefaults(); 
                 File.WriteAllText(path, JsonSerializer.Serialize<Config>(config, options));
             }
             return config; 
-        }
-
-        void setDefaults() {
-            Cookie = ""; 
-            Year = DateTime.Now.Year;
-            Days = (DateTime.Now.Month == 12) ? new int[]{DateTime.Now.Day} : new int[]{0}; 
         }
     }
 }
