@@ -11,12 +11,14 @@ namespace AdventOfCode.Solutions {
 
     public static class Utilities {
 
-        public static int[] ToIntArray(this string str) 
-            => str
-                .Split("")
+        public static int[] ToIntArray(this string str, string delimiter = "") {
+            return str
+                .Split(delimiter)
                 .Where(n => int.TryParse(n, out int v))
                 .Select(n => Convert.ToInt32(n))
                 .ToArray(); 
+        }
+
 
         public static int MinOfMany(params int[] items) {
             var result = items[0];
