@@ -59,7 +59,7 @@ namespace AdventOfCode.Solutions {
 
             if(File.Exists(INPUT_FILEPATH)) {
                 input = File.ReadAllText(INPUT_FILEPATH);
-            } else {
+            } else if(DateTime.Now >= new DateTime(Year, 12, Day)) {
                 try {
                     using(var client = new WebClient()) {
                         client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
@@ -73,7 +73,7 @@ namespace AdventOfCode.Solutions {
                     } else if(statusCode == HttpStatusCode.NotFound) {
                         Console.WriteLine($"Day {Day}: Error code 404 when attempting to retrieve puzzle input through the web client. The puzzle is probably not available yet.");
                     } else {
-                        Console.WriteLine(e.Status);
+                        Console.WriteLine(e.ToString());
                     }
                 }
             }
