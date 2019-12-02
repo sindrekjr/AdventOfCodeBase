@@ -1,11 +1,11 @@
-using System; 
-using System.Collections; 
-using System.Collections.Generic; 
-using System.Linq; 
-using System.Reflection; 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace AdventOfCode.Solutions {
-    
+
     class SolutionCollector : IEnumerable<ASolution> {
 
         IEnumerable<ASolution> Solutions;
@@ -16,16 +16,16 @@ namespace AdventOfCode.Solutions {
             try {
                 return Solutions.Single(s => s.Day == day);
             } catch(InvalidOperationException) {
-                return null; 
+                return null;
             }
         }
 
         public IEnumerator<ASolution> GetEnumerator() {
-            return Solutions.GetEnumerator(); 
+            return Solutions.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
-            return GetEnumerator(); 
+            return GetEnumerator();
         }
 
         IEnumerable<ASolution> LoadSolutions(int year, int[] days) {
@@ -41,7 +41,7 @@ namespace AdventOfCode.Solutions {
                 foreach(int day in days) {
                     var solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day.ToString("D2")}");
                     if(solution != null) {
-                        yield return (ASolution) Activator.CreateInstance(solution); 
+                        yield return (ASolution) Activator.CreateInstance(solution);
                     }
                 }
             }

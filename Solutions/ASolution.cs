@@ -1,5 +1,5 @@
 using System;
-using System.IO; 
+using System.IO;
 using System.Net;
 
 namespace AdventOfCode.Solutions {
@@ -7,17 +7,17 @@ namespace AdventOfCode.Solutions {
     abstract class ASolution {
 
         Lazy<string> _input, _part1, _part2;
-        
+
         public int Day { get; }
         public int Year { get; }
         public string Title { get; }
-        public string Input => string.IsNullOrEmpty(_input.Value) ? null : _input.Value; 
+        public string Input => string.IsNullOrEmpty(_input.Value) ? null : _input.Value;
         public string Part1 => string.IsNullOrEmpty(_part1.Value) ? "" : _part1.Value;
         public string Part2 => string.IsNullOrEmpty(_part2.Value) ? "" : _part2.Value;
 
         private protected ASolution(int day, int year, string title) {
             Day = day;
-            Year = year; 
+            Year = year;
             Title = title;
             _input = new Lazy<string>(() => LoadInput());
             _part1 = new Lazy<string>(() => SolvePartOne());
@@ -25,37 +25,37 @@ namespace AdventOfCode.Solutions {
         }
 
         public void Solve(int part = 0) {
-            if(Input == null) return; 
+            if(Input == null) return;
 
-            bool doOutput = false; 
+            bool doOutput = false;
             string output = $"--- Day {Day}: {Title} --- \n";
 
             if(part != 2) {
                 if(Part1 != "") {
-                    output += $"Part 1: {Part1}\n"; 
-                    doOutput= true; 
+                    output += $"Part 1: {Part1}\n";
+                    doOutput= true;
                 } else {
-                    output += "Part 1: Unsolved\n"; 
-                    if(part == 1) doOutput= true; 
+                    output += "Part 1: Unsolved\n";
+                    if(part == 1) doOutput= true;
                 }
             }
             if(part != 1) {
                 if(Part2 != "") {
                     output += $"Part 2: {Part2}\n";
-                    doOutput= true; 
+                    doOutput= true;
                 } else {
                     output += "Part 2: Unsolved\n";
-                    if(part == 2) doOutput= true; 
+                    if(part == 2) doOutput= true;
                 }
             }
 
-            if(doOutput) Console.WriteLine(output); 
+            if(doOutput) Console.WriteLine(output);
         }
 
         string LoadInput() {
             string INPUT_FILEPATH = $"./Solutions/Year{Year}/Day{Day.ToString("D2")}/input";
             string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
-            string input = ""; 
+            string input = "";
 
             if(File.Exists(INPUT_FILEPATH)) {
                 input = File.ReadAllText(INPUT_FILEPATH);
@@ -77,7 +77,7 @@ namespace AdventOfCode.Solutions {
                     }
                 }
             }
-            return input; 
+            return input;
         }
 
         protected abstract string SolvePartOne();

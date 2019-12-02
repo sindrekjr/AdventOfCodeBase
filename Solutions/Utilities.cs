@@ -1,7 +1,7 @@
 /**
- * This utility class is largely based on: 
+ * This utility class is largely based on:
  * https://github.com/jeroenheijmans/advent-of-code-2018/blob/master/AdventOfCode2018/Util.cs
- */ 
+ */
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace AdventOfCode.Solutions {
                 .Split(delimiter)
                 .Where(n => int.TryParse(n, out int v))
                 .Select(n => Convert.ToInt32(n))
-                .ToArray(); 
+                .ToArray();
         }
 
 
