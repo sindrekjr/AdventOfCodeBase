@@ -56,5 +56,13 @@ namespace AdventOfCode.Solutions {
                 .Select(s => shouldTrim ? s.Trim() : s)
                 .ToArray();
         }
+
+        public static int ManhattanDistance((int x, int y) a, (int x, int y) b) {
+            return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y); 
+        }
+
+        public static void Repeat(this Action action, int count) {
+            for(int i = 0; i < count; i++) action(); 
+        }
     }
 }
