@@ -11,7 +11,8 @@ namespace AdventOfCode.Solutions {
         public int Day { get; }
         public int Year { get; }
         public string Title { get; }
-        public string Input => string.IsNullOrEmpty(_input.Value) ? null : _input.Value;
+        public string DebugInput { get; set; }
+        public string Input => DebugInput != null ? DebugInput : (string.IsNullOrEmpty(_input.Value) ? null : _input.Value);
         public string Part1 => string.IsNullOrEmpty(_part1.Value) ? "" : _part1.Value;
         public string Part2 => string.IsNullOrEmpty(_part2.Value) ? "" : _part2.Value;
 
@@ -29,6 +30,10 @@ namespace AdventOfCode.Solutions {
 
             bool doOutput = false;
             string output = $"--- Day {Day}: {Title} --- \n";
+            if(DebugInput != null)
+            {
+                output+= $"!!! DebugInput used: {DebugInput}\n";
+            }
 
             if(part != 2) {
                 if(Part1 != "") {
