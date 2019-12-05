@@ -57,6 +57,12 @@ namespace AdventOfCode.Solutions {
                 .ToArray();
         }
 
+        public static string Reverse(this string str) {
+            char[] arr = str.ToCharArray(); 
+            Array.Reverse(arr); 
+            return new string(arr); 
+        }
+
         public static int ManhattanDistance((int x, int y) a, (int x, int y) b) {
             return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y); 
         }
