@@ -62,9 +62,9 @@ namespace AdventOfCode.Solutions {
             string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
             string input = "";
 
-            if(File.Exists(INPUT_FILEPATH)) {
+            if(File.Exists(INPUT_FILEPATH) && new FileInfo(INPUT_FILEPATH).Length > 0) {
                 input = File.ReadAllText(INPUT_FILEPATH);
-            } else if(DateTime.Now >= new DateTime(Year, 12, Day)) {
+            } else if(TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")) >= new DateTime(Year, 12, Day)) {
                 try {
                     using(var client = new WebClient()) {
                         client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
