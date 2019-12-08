@@ -12,11 +12,18 @@ namespace AdventOfCode.Solutions {
     public static class Utilities {
 
         public static int[] ToIntArray(this string str, string delimiter = "") {
-            return str
-                .Split(delimiter)
-                .Where(n => int.TryParse(n, out int v))
-                .Select(n => Convert.ToInt32(n))
-                .ToArray();
+            if(delimiter == "") {
+                var result = new List<int>(); 
+                foreach(char c in str) if(int.TryParse(c.ToString(), out int n)) result.Add(n); 
+                return result.ToArray(); 
+            } else {
+                return str
+                    .Split(delimiter)
+                    .Where(n => int.TryParse(n, out int v))
+                    .Select(n => Convert.ToInt32(n))
+                    .ToArray();
+            }
+            
         }
 
 
