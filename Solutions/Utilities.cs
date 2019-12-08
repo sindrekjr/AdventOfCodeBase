@@ -82,5 +82,11 @@ namespace AdventOfCode.Solutions {
         public static IEnumerable<IEnumerable<T>> Permutations<T>(this IEnumerable<T> values) {
             return (values.Count() == 1) ? new[]{values} : values.SelectMany(v => Permutations(values.Where(x => x.Equals(v) == false)), (v, p) => p.Prepend(v));
         }
+
+        public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> array, int size) {
+            for(var i = 0; i < (float) array.Count() / size; i++) {
+                yield return array.Skip(i * size).Take(size);
+            }
+        }
     }
 }
