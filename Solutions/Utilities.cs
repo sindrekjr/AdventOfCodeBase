@@ -77,5 +77,10 @@ namespace AdventOfCode.Solutions {
         public static void Repeat(this Action action, int count) {
             for(int i = 0; i < count; i++) action(); 
         }
+        
+        // https://github.com/tslater2006/AdventOfCode2019
+        public static IEnumerable<IEnumerable<T>> Permutations<T>(this IEnumerable<T> values) {
+            return (values.Count() == 1) ? new[]{values} : values.SelectMany(v => Permutations(values.Where(x => x.Equals(v) == false)), (v, p) => p.Prepend(v));
+        }
     }
 }
