@@ -74,6 +74,11 @@ namespace AdventOfCode.Solutions {
             return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y); 
         }
 
+        public static int FindGCD(int a, int b) {
+            while(a != b) a = a > b ? a - b : b - a; 
+            return a; 
+        }
+
         public static void Repeat(this Action action, int count) {
             for(int i = 0; i < count; i++) action(); 
         }
