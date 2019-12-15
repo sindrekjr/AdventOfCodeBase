@@ -104,5 +104,7 @@ namespace AdventOfCode.Solutions {
             second = list.Count > 1 ? list[1] : default(T); // or throw
             rest = list.Skip(2).ToList();
         }
+
+        public static (int, int) Add(this (int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y); 
     }
 }
