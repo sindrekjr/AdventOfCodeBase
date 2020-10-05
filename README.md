@@ -22,21 +22,8 @@ Make any file additions/modifications you want, such as removing solution files 
 Create `config.json` in the project root and add to it the following key/value pairs.
 ```json
 {
-  /*
-   * Valid cookie content required to retrieve puzzle input from adventofcode.com.
-   */
-  "cookie": "session=c0nt3nt", 
-  
-  /*
-   * int value representing year to pull puzzles from.
-   */
-  "year": 2019,
-
-  /* 
-   * int[] representing days of which to collect solutions. 
-   *  [0] resolves to "all" 
-   *  [] resolves to current date, if applicable
-   */
+  "cookie": "session=c0nt3nt",
+  "year": 2020,
   "days": [0] 
 }
 ```
