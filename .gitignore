@@ -341,4 +341,4 @@ ASALocalRun/
 
 # Local configuration
 config.json
-Solutions/Year*/Day*/input
+AdventOfCode/Solutions/Year*/Day*/input

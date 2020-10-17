@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 
 namespace AdventOfCode.Solutions
 {
@@ -71,7 +72,7 @@ namespace AdventOfCode.Solutions
 
         string LoadInput()
         {
-            string INPUT_FILEPATH = $"./Solutions/Year{Year}/Day{Day.ToString("D2")}/input";
+            string INPUT_FILEPATH = $"./AdventOfCode/Solutions/Year{Year}/Day{Day.ToString("D2")}/input";
             string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
             string input = "";
 
