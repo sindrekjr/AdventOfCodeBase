@@ -8,7 +8,7 @@ A basic C# program for Advent of Code, retrieving puzzle inputs on the go and cr
 * Fetches puzzle input from adventofcode.com and stores it locally.
 * Dynamically outputs current date's puzzle solution, depending on configuration.
 * Includes various useful utilities for typical puzzle problems.
-* Easy and intuitive configuration with config.json.
+* Simple configuration with config.json.
 
 ## Usage
 ### Create Project
@@ -19,7 +19,7 @@ Create a new project of your own from this template repository, through the butt
 Make any file additions/modifications you want, such as removing solution files for previous years if you've no interest in completing those. You probably do not want to remove any files outside of `AdventOfCode/Solutions/` unless you know what you're doing.
 
 ### Configure
-Create `config.json` in the project root and add to it the following key/value pairs.
+Create `config.json` with the following key/value pairs.
 ```json
 {
   "cookie": "session=c0nt3nt",
@@ -30,12 +30,13 @@ Create `config.json` in the project root and add to it the following key/value p
 If you run the program without adding a `config.json` file, one will be created for you without a cookie field. The program will not be able to fetch puzzle inputs from the web before a valid cookie is added to the configuration.
 
 ### Code
-Write your code solutions to advent of code within the appropriate day classes in the Solutions folder, and run the project as follows.
+Write your code solutions to advent of code within the appropriate day classes in the Solutions folder, and run the project. From the command line you may do as follows.
 ```
+> cd AdventOfCode
 > dotnet build
-> dotnet run -p AdventOfCode
+> dotnet run
 ```
-If you move into the `AdventOfCode` folder, `dotnet run` will be sufficient for running your code.
+Using `dotnet run` from the root of the project will also work as long as you specify which project to run by adding `-p AdventOfCode`. Note that `config.json` must be stored in the folder from where you run the project.
 
 ## Contributing 
 Sure! Fork the project, make your changes, and submit a pull request. 
