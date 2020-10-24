@@ -19,7 +19,7 @@ Create a new project of your own from this template repository, through the butt
 Make any file additions/modifications you want, such as removing solution files for previous years if you've no interest in completing those. You probably do not want to remove any files outside of `AdventOfCode/Solutions/` unless you know what you're doing.
 
 ### Configure
-Create `config.json` with the following key/value pairs.
+Create `config.json` with the following key/value pairs. If you run the program without adding a `config.json` file, one will be created for you without a cookie field. The program will not be able to fetch puzzle inputs from the web before a valid cookie is added to the configuration. 
 ```json
 {
   "cookie": "session=c0nt3nt",
@@ -27,7 +27,18 @@ Create `config.json` with the following key/value pairs.
   "days": [0] 
 }
 ```
-If you run the program without adding a `config.json` file, one will be created for you without a cookie field. The program will not be able to fetch puzzle inputs from the web before a valid cookie is added to the configuration.
+#### `cookie`
+Note that `c0nt3nt` must be replaced with a valid cookie value that your browser stores when logging in at adventofcode.com.
+
+#### `year`
+Specifies which year you wish to output solutions for when running the project.
+
+#### `days`
+Specifies which days you wish to output solutions for when running the project. The field supports list comprehension syntax and strings, meaning the following notations are valid.
+* `"1..4, 10"` - runs day 1, 2, 3, 4, and 10.
+* `[1, 3, "5..9", 15]` - runs day 1, 3, 5, 6, 7, 8, 9, and 15.
+* `0` - runs all days
+
 
 ### Code
 Write your code solutions to advent of code within the appropriate day classes in the Solutions folder, and run the project. From the command line you may do as follows.

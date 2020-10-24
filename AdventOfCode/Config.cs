@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode
@@ -30,6 +32,7 @@ namespace AdventOfCode
                 if(value >= 2015 && value <= DateTime.Now.Year) _y = value;
             }
         }
+        [JsonConverter(typeof(DaysConverter))]
         public int[] Days
         {
             get => _d;
@@ -81,6 +84,44 @@ namespace AdventOfCode
                 File.WriteAllText(path, JsonSerializer.Serialize<Config>(config, options));
             }
             return config;
+        }
+    }
+
+    class DaysConverter : JsonConverter<int[]>
+    {
+        public override int[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if(reader.TokenType == JsonTokenType.Number) return new int[] { reader.GetInt16() };
+            var tokens = reader.TokenType == JsonTokenType.String
+                ? new string[] { reader.GetString() }
+                : JsonSerializer.Deserialize<object[]>(ref reader).Select<object, string>(o => o.ToString());
+            return tokens.SelectMany<string, int>(ParseString).ToArray();
+        }
+
+        private IEnumerable<int> ParseString(string str)
+        {
+            return str.Split(",").SelectMany<string, int>(str =>
+            {
+                if(str.Contains(".."))
+                {
+                    var split = str.Split("..");
+                    int start = int.Parse(split[0]);
+                    int stop = int.Parse(split[1]);
+                    return Enumerable.Range(start, stop - start + 1);
+                }
+                else if(int.TryParse(str, out int day))
+                {
+                    return new int[] { day };
+                }
+                return new int[0];
+            });
+        }
+
+        public override void Write(Utf8JsonWriter writer, int[] value, JsonSerializerOptions options)
+        {
+            writer.WriteStartArray();
+            foreach(int val in value) writer.WriteNumberValue(val);
+            writer.WriteEndArray();
         }
     }
 }
