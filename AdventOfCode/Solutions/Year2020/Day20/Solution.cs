@@ -4,7 +4,7 @@ namespace AdventOfCode.Solutions.Year2020
     class Day20 : ASolution
     {
 
-        public Day20() : base(20, 2019, "")
+        public Day20() : base(20, 2020, "")
         {
 
         }

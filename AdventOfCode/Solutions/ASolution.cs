@@ -72,7 +72,7 @@ namespace AdventOfCode.Solutions
 
         string LoadInput()
         {
-            string INPUT_FILEPATH = $"./AdventOfCode/Solutions/Year{Year}/Day{Day.ToString("D2")}/input";
+            string INPUT_FILEPATH = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"../../../Solutions/Year{Year}/Day{Day.ToString("D2")}/input"));
             string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
             string input = "";
 
@@ -80,10 +80,13 @@ namespace AdventOfCode.Solutions
             {
                 input = File.ReadAllText(INPUT_FILEPATH);
             }
-            else if(TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")) >= new DateTime(Year, 12, Day))
+            else
             {
                 try
                 {
+                    DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
+                    if(CURRENT_EST < new DateTime(Year, 12, Day)) throw new InvalidOperationException();
+
                     using(var client = new WebClient())
                     {
                         client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
@@ -106,6 +109,10 @@ namespace AdventOfCode.Solutions
                     {
                         Console.WriteLine(e.ToString());
                     }
+                }
+                catch(InvalidOperationException)
+                {
+                    Console.WriteLine($"Day {Day}: Cannot fetch puzzle input before given date (Eastern Standard Time).");
                 }
             }
             return input;

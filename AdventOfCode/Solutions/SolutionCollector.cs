@@ -40,24 +40,15 @@ namespace AdventOfCode.Solutions
         {
             if(days.Sum() == 0)
             {
-                var solutions = Assembly
-                    .GetExecutingAssembly()
-                    .GetTypes()
-                    .Where(type => type.Namespace == $"AdventOfCode.Solutions.Year{year}");
-                foreach(Type solution in solutions)
+                days = Enumerable.Range(1, 25).ToArray();
+            }
+            
+            foreach(int day in days)
+            {
+                var solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day.ToString("D2")}");
+                if(solution != null)
                 {
                     yield return (ASolution)Activator.CreateInstance(solution);
-                }
-            }
-            else
-            {
-                foreach(int day in days)
-                {
-                    var solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day.ToString("D2")}");
-                    if(solution != null)
-                    {
-                        yield return (ASolution)Activator.CreateInstance(solution);
-                    }
                 }
             }
         }
