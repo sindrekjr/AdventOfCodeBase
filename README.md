@@ -19,11 +19,13 @@ Create a new project of your own from this template repository, through the butt
 Make any file additions/modifications you want, such as removing solution files for previous years if you've no interest in completing those. You probably do not want to remove any files outside of `AdventOfCode/Solutions/` unless you know what you're doing.
 
 ### Generating Previous Year's Solution Files
-Use the included PowerShell script `AdventOfCode/GenerateSolutionFiles.ps1` to generate a year's solution files following the same layout as those aleardy included.
+Use the included PowerShell script `AdventOfCode/UserScripts/GenerateSolutionFiles.ps1` to generate a year's solution files following the same layout as those already included.
 
 Usage: `GenerateSolutionFiles.ps1 [-Year <Int>]`
 
 If no value is provided it will generate files for the current year. The script will avoid overwriting existing files.  
+
+Requires PowerShell v3 or later due to the way `$PSScriptRoot` behaves. If you have Windows 8+ you should be set. Upgrades for previous versions, and installs for macOS and Linux can be found in [Microsoft's Powershell Documentation](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1)
 
 ### Configure
 Create `config.json` with the following key/value pairs. If you run the program without adding a `config.json` file, one will be created for you without a cookie field. The program will not be able to fetch puzzle inputs from the web before a valid cookie is added to the configuration. 
