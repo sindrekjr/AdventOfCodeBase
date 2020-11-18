@@ -59,10 +59,10 @@ namespace AdventOfCode
         void setDefaults()
         {
             //Make sure we're looking at EST, or it might break for most of the US
-            DateTime curEST = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Eastern Standard Time");
+            DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
             if (Cookie == default(string)) Cookie = "";
-            if(Year == default(int)) Year = curEST.Year;
-            if(Days == default(int[])) Days = (curEST.Month == 12 && curEST.Day <= 25) ? new int[] { curEST.Day } : new int[] { 0 };
+            if(Year == default(int)) Year = CURRENT_EST.Year;
+            if(Days == default(int[])) Days = (CURRENT_EST.Month == 12 && CURRENT_EST.Day <= 25) ? new int[] { CURRENT_EST.Day } : new int[] { 0 };
         }
 
         public static Config Get(string path)
