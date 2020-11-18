@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AdventOfCode.Solutions.UserClasses;
 
 namespace AdventOfCode.Solutions.Year2019
 {
