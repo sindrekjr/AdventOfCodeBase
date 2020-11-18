@@ -30,6 +30,7 @@ namespace AdventOfCode.Solutions.Year<YEAR>
         }
     }
 }
+
 "@
 
 $newDirectory = Join-Path $PSScriptRoot ".." "Solutions" "Year$Year" 
