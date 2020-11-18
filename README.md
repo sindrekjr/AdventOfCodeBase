@@ -88,8 +88,6 @@ protected override string SolvePartTwo()
 * The variable `Input` will contain your input as a long raw string.
 * If stuck you can set the `DebugInput` variable at the top of the constructor, and it will overwrite `Input` variable, so you won't need to change all your references. 
 * The extension method `SplitByNewLine()` will do exactly that, example: `string[] lines = Input.SplitByNewLine()` will split your input into lines for enumeration.
-* Custom classes that you may want to re-use can be placed in `AdventOfCode/UserClasses`. Example: The AssemBunny computer from 2016 or the IntCode computer from 2019.
- 
 
 ## Contributing 
 Sure! Fork the project, make your changes, and submit a pull request. 
