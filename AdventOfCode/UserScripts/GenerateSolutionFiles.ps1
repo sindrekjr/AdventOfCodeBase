@@ -3,6 +3,11 @@
 )
 
 $template = @"
+using System;
+using System.Collections.Generic;
+using System.Text;
+using AdventOfCode.UserClasses;
+
 namespace AdventOfCode.Solutions.Year<YEAR>
 {
 
