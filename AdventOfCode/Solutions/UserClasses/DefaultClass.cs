@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdventOfCode.UserClasses
+namespace AdventOfCode.Solutions.UserClasses
 {
     class DefaultClass
     {
