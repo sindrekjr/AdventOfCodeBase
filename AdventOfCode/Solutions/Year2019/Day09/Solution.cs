@@ -1,10 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace AdventOfCode.Solutions.Year2019
 {
 
     class Day09 : ASolution
     {
 
-        public Day09() : base(9, 2019, "")
+        public Day09() : base(09, 2019, "")
         {
 
         }

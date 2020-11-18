@@ -3,6 +3,10 @@
 )
 
 $template = @"
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace AdventOfCode.Solutions.Year<YEAR>
 {
 
@@ -25,6 +29,7 @@ namespace AdventOfCode.Solutions.Year<YEAR>
         }
     }
 }
+
 "@
 
 $newDirectory = Join-Path $PSScriptRoot ".." "Solutions" "Year$Year" 

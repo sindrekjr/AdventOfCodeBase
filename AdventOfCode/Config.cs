@@ -58,9 +58,11 @@ namespace AdventOfCode
 
         void setDefaults()
         {
-            if(Cookie == default(string)) Cookie = "";
-            if(Year == default(int)) Year = DateTime.Now.Year;
-            if(Days == default(int[])) Days = (DateTime.Now.Month == 12) ? new int[] { DateTime.Now.Day } : new int[] { 0 };
+            //Make sure we're looking at EST, or it might break for most of the US
+            DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
+            if (Cookie == default(string)) Cookie = "";
+            if(Year == default(int)) Year = CURRENT_EST.Year;
+            if(Days == default(int[])) Days = (CURRENT_EST.Month == 12 && CURRENT_EST.Day <= 25) ? new int[] { CURRENT_EST.Day } : new int[] { 0 };
         }
 
         public static Config Get(string path)
