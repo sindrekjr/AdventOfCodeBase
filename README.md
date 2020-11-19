@@ -1,5 +1,5 @@
 # AdventOfCodeBase
-A basic C# program for Advent of Code, retrieving puzzle inputs on the go and creating instances of solutions as they are created. It runs on .NET Core 3.0 and can be built easily in Visual Studio Code or Visual Studio. 
+A basic C# program for Advent of Code, retrieving puzzle inputs on the go and creating instances of solutions as they are created. It runs on .NET Core 3.1 and can be built easily in Visual Studio Code or Visual Studio. 
 
 ## Requirements
 * .NET Core 3.1
@@ -12,8 +12,11 @@ A basic C# program for Advent of Code, retrieving puzzle inputs on the go and cr
 
 ## Usage
 ### Create Project
-Create a new project of your own from this template repository, through the button shown below.
-![usetemplate](https://user-images.githubusercontent.com/23259585/95107477-3e522300-073a-11eb-8c80-c0cd4e1b5c11.png)
+Create a new project of your own from this template repository by clicking the button shown below, or through [this link](https://github.com/sindrekjr/AdventOfCodeBase/generate).
+
+||
+|:--:|
+| ![usetemplate](https://user-images.githubusercontent.com/23259585/95107477-3e522300-073a-11eb-8c80-c0cd4e1b5c11.png) |
 
 ### Cleanup
 Make any file additions/modifications you want, such as removing solution files for previous years if you've no interest in completing those. You probably do not want to remove any files outside of `AdventOfCode/Solutions/` unless you know what you're doing.
@@ -59,7 +62,7 @@ Write your code solutions to advent of code within the appropriate day classes i
 > dotnet build
 > dotnet run
 ```
-Using `dotnet run` from the root of the project will also work as long as you specify which project to run by adding `-p AdventOfCode`. Note that `config.json` must be stored in the folder from where you run the project.
+Using `dotnet run` from the root of the repository will also work as long as you specify which project to run by adding `-p AdventOfCode`. Note that your `config.json` must be stored in the location from where you run your project.
 
 #### Notes
 * Code may be written in the solution constructor if it will be beneficial to both parts of the problem (such as parsing the data). Example:
@@ -69,7 +72,7 @@ public Day07() : base(07, 2015, "")
     string[] lines = Input.SplitByNewLine();
     foreach (string line in Lines)
     {
-      //Parse out input here
+        //Parse out input here
     }
 }
 
@@ -81,7 +84,7 @@ protected override string SolvePartOne()
 
 protected override string SolvePartTwo()
 {
-  //Manipulations specific to Part 2 here
+    //Manipulations specific to Part 2 here
     return result;
 }
 ```
