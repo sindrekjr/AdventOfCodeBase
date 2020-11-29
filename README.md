@@ -7,7 +7,8 @@ Template project for solving Advent of Code in C#, running on .NET Core 3.1.
   - [Requirements](#requirements)
   - [Configuration](#configuration)
   - [Running the project](#running-the-project)
-- [Notes & Examples](#notes--examples)
+  - [Example projects](#example-projects)
+- [Notes](#notes)
   - [Generating Previous Year's Solution Files](#generating-previous-years-solution-files)
   - [Using a Solution's Constructor](#using-a-solutions-constructor)
 - [Contributing](#contributing)
@@ -52,8 +53,6 @@ The field supports list comprehension syntax and strings, meaning the following 
 * `[1, 3, "5..9", 15]` - runs day 1, 3, 5, 6, 7, 8, 9, and 15.
 * `0` - runs all days
 
-
-
 ### Running the project
 Write your code solutions to advent of code within the appropriate day classes in the Solutions folder, and run the project. From the command line you may do as follows.
 ```
@@ -63,7 +62,10 @@ Write your code solutions to advent of code within the appropriate day classes i
 ```
 Using `dotnet run` from the root of the repository will also work as long as you specify which project to run by adding `-p AdventOfCode`. Note that your `config.json` must be stored in the location from where you run your project.
 
-## Notes & Examples
+### Example projects
+* [sindrekjr/AdventOfCode](https://github.com/sindrekjr/AdventOfCode)
+
+## Notes
 ### Generating Previous Year's Solution Files
 Use the included PowerShell script `AdventOfCode/UserScripts/GenerateSolutionFiles.ps1` to generate a year's solution files following the same layout as those already included.
 
