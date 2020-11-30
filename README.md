@@ -1,16 +1,16 @@
 # AdventOfCodeBase
-Template project for solving Advent of Code in C#, running on .NET 5.0
+Template project for solving Advent of Code in C#, running on [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0).
 
 - [Features](#features)
 - [Getting started](#getting-started)
 - [Usage](#usage)
-  - [Requirements](#requirements)
   - [Configuration](#configuration)
   - [Running the project](#running-the-project)
   - [Example projects](#example-projects)
 - [Notes](#notes)
   - [Generating Previous Year's Solution Files](#generating-previous-years-solution-files)
   - [Using a Solution's Constructor](#using-a-solutions-constructor)
+  - [Using .NET Core](#using-net-core)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -29,9 +29,6 @@ Feel free to make any modifications you want. However, you probably do not want 
 If any solution files that you need are not already included, see **[Generating Previous Year's Solution Files](#generating-previous-years-solution-files)**.
 
 ## Usage
-### Requirements
-* [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-
 ### Configuration
 Create `config.json` with the following key/value pairs. If you run the program without adding a `config.json` file, one will be created for you without a cookie field. The program will not be able to fetch puzzle inputs from the web before a valid cookie is added to the configuration. 
 ```json
@@ -102,6 +99,14 @@ protected override string SolvePartTwo()
 * The variable `Input` will contain your input as a long raw string.
 * If stuck you can set the `DebugInput` variable at the top of the constructor, and it will overwrite `Input` variable, so you won't need to change all your references. 
 * The extension method `SplitByNewLine()` will do exactly that, example: `string[] lines = Input.SplitByNewLine()` will split your input into lines for enumeration.
+
+### Using .NET Core
+Simply swap out the target framework in `AdventOfCode.csproj`.
+```diff
+-    <TargetFramework>net5.0</TargetFramework>
++    <TargetFramework>netcoreapp3.1</TargetFramework>
+```
+
 
 ## Contributing 
 Sure! Fork the project, make your changes, and create a pull request. Submitted issues and pull requests are quite welcome.
