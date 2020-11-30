@@ -1,5 +1,5 @@
 # AdventOfCodeBase
-Template project for solving Advent of Code in C#, running on [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1). If you wish to use .NET 5, [you can](#changing-from-net-core-to-net-5).
+Template project for solving Advent of Code in C#, running on [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0).
 
 - [Features](#features)
 - [Getting started](#getting-started)
@@ -10,7 +10,7 @@ Template project for solving Advent of Code in C#, running on [.NET Core 3.1](ht
 - [Notes](#notes)
   - [Generating Previous Year's Solution Files](#generating-previous-years-solution-files)
   - [Using a Solution's Constructor](#using-a-solutions-constructor)
-  - [Changing From .NET Core To .NET 5](#changing-from-net-core-to-net-5)
+  - [Using .NET Core](#using-net-core)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -100,11 +100,11 @@ protected override string SolvePartTwo()
 * If stuck you can set the `DebugInput` variable at the top of the constructor, and it will overwrite `Input` variable, so you won't need to change all your references. 
 * The extension method `SplitByNewLine()` will do exactly that, example: `string[] lines = Input.SplitByNewLine()` will split your input into lines for enumeration.
 
-### Changing from .NET Core to .NET 5
+### Using .NET Core
 Simply swap out the target framework in `AdventOfCode.csproj`.
 ```diff
--    <TargetFramework>netcoreapp3.1</TargetFramework>
-+    <TargetFramework>net5.0</TargetFramework>
+-    <TargetFramework>net5.0</TargetFramework>
++    <TargetFramework>netcoreapp3.1</TargetFramework>
 ```
 
 
