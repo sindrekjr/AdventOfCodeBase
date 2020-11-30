@@ -1,5 +1,5 @@
 # AdventOfCodeBase
-Template project for solving Advent of Code in C#, running on .NET Core 3.1.
+Template project for solving Advent of Code in C#, running on .NET 5.0
 
 - [Features](#features)
 - [Getting started](#getting-started)
@@ -30,7 +30,7 @@ If any solution files that you need are not already included, see **[Generating 
 
 ## Usage
 ### Requirements
-* [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+* [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 
 ### Configuration
 Create `config.json` with the following key/value pairs. If you run the program without adding a `config.json` file, one will be created for you without a cookie field. The program will not be able to fetch puzzle inputs from the web before a valid cookie is added to the configuration. 
