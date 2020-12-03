@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -24,9 +25,9 @@ namespace AdventOfCode.Solutions
             Day = day;
             Year = year;
             Title = title;
-            _input = new Lazy<string>(() => LoadInput());
-            _part1 = new Lazy<string>(() => SolvePartOne());
-            _part2 = new Lazy<string>(() => SolvePartTwo());
+            _input = new Lazy<string>(LoadInput);
+            _part1 = new Lazy<string>(() => SolveSafely(SolvePartOne));
+            _part2 = new Lazy<string>(() => SolveSafely(SolvePartTwo));
         }
 
         public void Solve(int part = 0)
@@ -116,6 +117,25 @@ namespace AdventOfCode.Solutions
                 }
             }
             return input;
+        }
+
+        private string SolveSafely(Func<string> solver)
+        {
+            try
+            {
+                return solver();
+            }
+            catch( Exception ) {
+                if( Debugger.IsAttached )
+                {
+                    Debugger.Break();
+                    return string.Empty;
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
         protected abstract string SolvePartOne();
