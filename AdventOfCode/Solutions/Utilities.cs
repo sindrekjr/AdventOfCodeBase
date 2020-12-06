@@ -129,5 +129,8 @@ namespace AdventOfCode.Solutions
         }
 
         public static (int, int) Add(this (int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y);
+
+        public static IEnumerable<T> IntersectAll<T>(this IEnumerable<IEnumerable<T>> input)
+            => input.Aggregate(input.First(), (intersector, next) => intersector.Intersect(next));
     }
 }
