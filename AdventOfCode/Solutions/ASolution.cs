@@ -1,135 +1,85 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Net.Http;
+using AdventOfCode.Infrastructure.Exceptions;
+using AdventOfCode.Infrastructure.Helpers;
+using AdventOfCode.Infrastructure.Models;
 
 namespace AdventOfCode.Solutions
 {
-
     abstract class ASolution
     {
-
-        Lazy<string> _input, _part1, _part2;
+        Lazy<string> _input, _debugInput;
+        Lazy<SolutionResult> _part1, _part2;
 
         public int Day { get; }
         public int Year { get; }
         public string Title { get; }
-        public string DebugInput { get; set; }
-        public string Input => DebugInput != null ? DebugInput : (string.IsNullOrEmpty(_input.Value) ? null : _input.Value);
-        public string Part1 => string.IsNullOrEmpty(_part1.Value) ? "" : _part1.Value;
-        public string Part2 => string.IsNullOrEmpty(_part2.Value) ? "" : _part2.Value;
+        public string Input => Debug ? DebugInput : _input.Value ?? null;
+        public SolutionResult Part1 => _part1.Value;
+        public SolutionResult Part2 => _part2.Value;
 
-        private protected ASolution(int day, int year, string title)
+        public string DebugInput => _debugInput.Value ?? null;
+        public bool Debug { get; set; }
+
+        private protected ASolution(int day, int year, string title, bool useDebugInput = false)
         {
             Day = day;
             Year = year;
             Title = title;
-            _input = new Lazy<string>(LoadInput);
-            _part1 = new Lazy<string>(() => SolveSafely(SolvePartOne));
-            _part2 = new Lazy<string>(() => SolveSafely(SolvePartTwo));
+            Debug = useDebugInput;
+            _input = new Lazy<string>(() => InputHelper.LoadInput(Day, Year));
+            _debugInput = new Lazy<string>(() => InputHelper.LoadDebugInput(Day, Year));
+            _part1 = new Lazy<SolutionResult>(() => Solver(SolvePartOne));
+            _part2 = new Lazy<SolutionResult>(() => Solver(SolvePartTwo));
         }
 
-        public void Solve(int part = 0)
+        public IEnumerable<SolutionResult> Solve(int part = 0)
         {
-            if(Input == null) return;
-
-            bool doOutput = false;
-            string output = $"--- Day {Day}: {Title} --- \n";
-            if(DebugInput != null)
+            if (part != 2 && (part == 1 || !string.IsNullOrEmpty(Part1.Answer)))
             {
-                output += $"!!! DebugInput used: {DebugInput}\n";
+                yield return Part1;
             }
 
-            if(part != 2)
+            if (part != 1 && (part == 2 || !string.IsNullOrEmpty(Part2.Answer)))
             {
-                if(Part1 != "")
-                {
-                    output += $"Part 1: {Part1}\n";
-                    doOutput = true;
-                }
-                else
-                {
-                    output += "Part 1: Unsolved\n";
-                    if(part == 1) doOutput = true;
-                }
+                yield return Part2;
             }
-            if(part != 1)
-            {
-                if(Part2 != "")
-                {
-                    output += $"Part 2: {Part2}\n";
-                    doOutput = true;
-                }
-                else
-                {
-                    output += "Part 2: Unsolved\n";
-                    if(part == 2) doOutput = true;
-                }
-            }
-
-            if(doOutput) Console.WriteLine(output);
         }
 
-        string LoadInput()
+        public override string ToString()
+            => $"{FormatHelper.FormatTitle(Day, Title)}\n"
+                + (Debug ? FormatHelper.FormatDebug(DebugInput) + "\n" : "")
+                + $"{FormatHelper.FormatPart(1, Part1)}\n"
+                + $"{FormatHelper.FormatPart(2, Part2)}\n";
+
+        SolutionResult Solver(Func<string> SolverFunction)
         {
-            string INPUT_FILEPATH = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"../../../Solutions/Year{Year}/Day{Day.ToString("D2")}/input"));
-            string INPUT_URL = $"https://adventofcode.com/{Year}/day/{Day}/input";
-            string input = "";
-
-            if(File.Exists(INPUT_FILEPATH) && new FileInfo(INPUT_FILEPATH).Length > 0)
+            if (Debug)
             {
-                input = File.ReadAllText(INPUT_FILEPATH);
-            }
-            else
-            {
-                try
+                if (string.IsNullOrEmpty(DebugInput))
                 {
-                    DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
-                    if(CURRENT_EST < new DateTime(Year, 12, Day)) throw new InvalidOperationException();
-
-                    using(var client = new WebClient())
-                    {
-                        client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
-                        input = client.DownloadString(INPUT_URL).Trim();
-                        File.WriteAllText(INPUT_FILEPATH, input);
-                    }
-                }
-                catch(WebException e)
-                {
-                    var statusCode = ((HttpWebResponse)e.Response).StatusCode;
-                    if(statusCode == HttpStatusCode.BadRequest)
-                    {
-                        Console.WriteLine($"Day {Day}: Error code 400 when attempting to retrieve puzzle input through the web client. Your session cookie is probably not recognized.");
-                    }
-                    else if(statusCode == HttpStatusCode.NotFound)
-                    {
-                        Console.WriteLine($"Day {Day}: Error code 404 when attempting to retrieve puzzle input through the web client. The puzzle is probably not available yet.");
-                    }
-                    else
-                    {
-                        Console.WriteLine(e.ToString());
-                    }
-                }
-                catch(InvalidOperationException)
-                {
-                    Console.WriteLine($"Day {Day}: Cannot fetch puzzle input before given date (Eastern Standard Time).");
+                    throw new InputException("DebugInput is null or empty");
                 }
             }
-            return input;
-        }
+            else if (string.IsNullOrEmpty(Input))
+            {
+                throw new InputException("Input is null or empty");
+            }
 
-        private string SolveSafely(Func<string> solver)
-        {
             try
             {
-                return solver();
+                var then = DateTime.Now;
+                var result = SolverFunction();
+                var now = DateTime.Now;
+                return string.IsNullOrEmpty(result) ? SolutionResult.Empty : new SolutionResult { Answer = result, Time = now - then };
             }
-            catch( Exception ) {
-                if( Debugger.IsAttached )
+            catch (Exception)
+            {
+                if (Debugger.IsAttached)
                 {
                     Debugger.Break();
-                    return string.Empty;
+                    return SolutionResult.Empty;
                 }
                 else
                 {
