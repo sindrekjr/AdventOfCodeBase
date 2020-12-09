@@ -114,7 +114,7 @@ namespace AdventOfCode.Infrastructure.Models
                 {
                     return new int[] { day };
                 }
-                
+
                 return new int[0];
             });
         }

@@ -10,9 +10,7 @@ namespace AdventOfCode.Infrastructure.Helpers
 
         public static string FormatTitle(int day, string title) => $"Day {day}: {title}";
 
-        public static string FormatDebug(string debugInput) => string.IsNullOrEmpty(debugInput)
-            ? "!! Debug mode active, but no DebugInput defined"
-            : "!! Debug mode active, using DebugInput";
+        public static string FormatDebug(string debugInput) => "!! Debug mode active, using DebugInput";
 
         public static string FormatPart(int part, SolutionResult result)
             => $"  - Part{part} => " + (string.IsNullOrEmpty(result.Answer) ? "Unsolved" : $"{result.Answer} ({result.Time.TotalMilliseconds}ms)");

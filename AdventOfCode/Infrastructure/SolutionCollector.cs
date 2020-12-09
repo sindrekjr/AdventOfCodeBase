@@ -2,14 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AdventOfCode.Infrastructure.Models;
 using AdventOfCode.Solutions;
 
 namespace AdventOfCode.Infrastructure
 {
     class SolutionCollector : IEnumerable<ASolution>
     {
+        readonly static Config config = Config.Get("config.json");
+
         IEnumerable<ASolution> Solutions;
 
+        public SolutionCollector() => Solutions = LoadSolutions(config.Year, config.Days).ToArray();
         public SolutionCollector(int year, int[] days) => Solutions = LoadSolutions(year, days).ToArray();
 
         public ASolution GetSolution(int day)
@@ -25,7 +29,6 @@ namespace AdventOfCode.Infrastructure
         }
 
         public IEnumerator<ASolution> GetEnumerator() => Solutions.GetEnumerator();
-
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
