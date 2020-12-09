@@ -10,6 +10,7 @@ Template project for solving Advent of Code in C#, running on [.NET 5.0](https:/
 - [Notes](#notes)
   - [Generating Previous Year's Solution Files](#generating-previous-years-solution-files)
   - [Using a Solution's Constructor](#using-a-solutions-constructor)
+  - [Using DebugInput](#using-debuginput)
   - [Using .NET Core](#using-net-core)
   - [Automatic Debugger Break On Exception](#automatic-debugger-break-on-exception)
 - [Background](#background)
@@ -19,6 +20,8 @@ Template project for solving Advent of Code in C#, running on [.NET 5.0](https:/
 ## Features
 * Simple configuration with `config.json`.
 * Fetches puzzle input from adventofcode.com and stores it locally.
+* Supports easily switching between debug-input and real input.
+* Naive benchmarking, showing as millisecond count.
 * Includes various useful utilities for typical puzzle problems.
 
 ## Getting started
@@ -99,8 +102,19 @@ protected override string SolvePartTwo()
 }
 ```
 * The variable `Input` will contain your input as a long raw string.
-* If stuck you can set the `DebugInput` variable at the top of the constructor, and it will overwrite `Input` variable, so you won't need to change all your references. 
 * The extension method `SplitByNewLine()` will do exactly that, example: `string[] lines = Input.SplitByNewLine()` will split your input into lines for enumeration.
+
+### Using DebugInput
+* Real inputs are stored in a file named `input`; for debug inputs, simply store them at same level in a file `debug`.
+* Both input files are loaded at runtime, but you must toggle the DebugInput on to use it, as shown below.
+```diff
+-   public Day07() : base(07, 2015, "")
++   public Day07() : base(07, 2015, "", true)
+        {
+    
+        }
+```
+* Setting `Debug = true` within the constructor body also works fine.
 
 ### Using .NET Core
 Simply swap out the target framework in `AdventOfCode.csproj`.
