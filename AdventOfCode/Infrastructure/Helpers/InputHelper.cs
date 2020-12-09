@@ -1,11 +1,14 @@
 using System;
 using System.IO;
 using System.Net;
+using AdventOfCode.Infrastructure.Models;
 
 namespace AdventOfCode.Infrastructure.Helpers
 {
     static class InputHelper
     {
+        readonly static string cookie = Config.Get("config.json").Cookie;
+
         public static string LoadInput(int day, int year)
         {
             string INPUT_FILEPATH = GetDayPath(day, year) + "/input";
@@ -25,7 +28,7 @@ namespace AdventOfCode.Infrastructure.Helpers
 
                     using (var client = new WebClient())
                     {
-                        client.Headers.Add(HttpRequestHeader.Cookie, Program.Config.Cookie);
+                        client.Headers.Add(HttpRequestHeader.Cookie, cookie);
                         input = client.DownloadString(INPUT_URL).Trim();
                         File.WriteAllText(INPUT_FILEPATH, input);
                     }
@@ -37,12 +40,12 @@ namespace AdventOfCode.Infrastructure.Helpers
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     if (statusCode == HttpStatusCode.BadRequest)
                     {
-                        Console.WriteLine($"Day {day}: Error code 400 when attempting to retrieve puzzle input through the web client. Your session cookie is probably not recognized.");
+                        Console.WriteLine($"Day {day}: Received 400 when attempting to retrieve puzzle input. Your session cookie is probably not recognized.");
 
                     }
                     else if (statusCode == HttpStatusCode.NotFound)
                     {
-                        Console.WriteLine($"Day {day}: Error code 404 when attempting to retrieve puzzle input through the web client. The puzzle is probably not available yet.");
+                        Console.WriteLine($"Day {day}: Received 404 when attempting to retrieve puzzle input. The puzzle is probably not available yet.");
                     }
                     else
                     {
