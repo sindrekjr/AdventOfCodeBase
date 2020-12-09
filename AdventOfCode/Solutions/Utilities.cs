@@ -132,5 +132,13 @@ namespace AdventOfCode.Solutions
 
         public static IEnumerable<T> IntersectAll<T>(this IEnumerable<IEnumerable<T>> input)
             => input.Aggregate(input.First(), (intersector, next) => intersector.Intersect(next));
+
+        public static T[] Subarray<T>(this T[] array, int offset, int length = -1)
+        {
+            length = length != -1 ? length : array.Length - offset;
+            T[] result = new T[length];
+            Array.Copy(array, offset, result, 0, length);
+            return result;
+        }
     }
 }
