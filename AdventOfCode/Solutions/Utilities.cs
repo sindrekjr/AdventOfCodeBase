@@ -226,14 +226,6 @@ namespace AdventOfCode.Solutions
 
         public static IEnumerable<T> IntersectAll<T>(this IEnumerable<IEnumerable<T>> input)
             => input.Aggregate(input.First(), (intersector, next) => intersector.Intersect(next));
-
-        public static T[] Subarray<T>(this T[] array, int offset, int length = -1)
-        {
-            length = length != -1 ? length : array.Length - offset;
-            T[] result = new T[length];
-            Array.Copy(array, offset, result, 0, length);
-            return result;
-        }
         
         //https://stackoverflow.com/questions/2641326/finding-all-positions-of-substring-in-a-larger-string-in-c-sharp
         public static IEnumerable<int> AllIndexesOf(this string str, string value)
