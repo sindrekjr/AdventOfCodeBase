@@ -1,7 +1,6 @@
 ﻿using System;
 using AdventOfCode.Infrastructure;
 using AdventOfCode.Infrastructure.Helpers;
-using AdventOfCode.Infrastructure.Models;
 using AdventOfCode.Solutions;
 
 namespace AdventOfCode
@@ -15,7 +14,7 @@ namespace AdventOfCode
             foreach (ASolution solution in Solutions)
             {
                 Console.WriteLine();
-                Console.WriteLine(FormatHelper.FormatDay(solution));
+                Console.WriteLine(FormatHelper.FunctionFormat(solution));
             }
         }
     }

@@ -6,7 +6,17 @@ namespace AdventOfCode.Infrastructure.Helpers
 {
     static class FormatHelper
     {
-        public static string FormatDay(ASolution solution) => solution.ToString();
+        public static string SimpleFormat(ASolution solution)
+            => $"--- {FormatTitle(solution.Day, solution.Title)} --- \n"
+                + (solution.Debug ? FormatDebug(solution.DebugInput) + "\n" : "")
+                + $"Part 1: {solution.Part1.Answer}\n"
+                + $"Part 2: {solution.Part2.Answer}\n";
+
+        public static string FunctionFormat(ASolution solution)
+            => $"{FormatTitle(solution.Day, solution.Title)}\n"
+                + (solution.Debug ? FormatDebug(solution.DebugInput) + "\n" : "")
+                + $"{FormatPart(1, solution.Part1)}\n"
+                + $"{FormatPart(2, solution.Part2)}\n";
 
         public static string FormatTitle(int day, string title) => $"Day {day}: {title}";
 
