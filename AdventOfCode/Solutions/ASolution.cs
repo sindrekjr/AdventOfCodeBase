@@ -30,8 +30,8 @@ namespace AdventOfCode.Solutions
             Debug = useDebugInput;
             _input = new Lazy<string>(() => InputHelper.LoadInput(Day, Year));
             _debugInput = new Lazy<string>(() => InputHelper.LoadDebugInput(Day, Year));
-            _part1 = new Lazy<SolutionResult>(() => Solver(SolvePartOne));
-            _part2 = new Lazy<SolutionResult>(() => Solver(SolvePartTwo));
+            _part1 = new Lazy<SolutionResult>(() => SolveSafely(SolvePartOne));
+            _part2 = new Lazy<SolutionResult>(() => SolveSafely(SolvePartTwo));
         }
 
         public IEnumerable<SolutionResult> Solve(int part = 0)
@@ -47,13 +47,7 @@ namespace AdventOfCode.Solutions
             }
         }
 
-        public override string ToString()
-            => $"{FormatHelper.FormatTitle(Day, Title)}\n"
-                + (Debug ? FormatHelper.FormatDebug(DebugInput) + "\n" : "")
-                + $"{FormatHelper.FormatPart(1, Part1)}\n"
-                + $"{FormatHelper.FormatPart(2, Part2)}\n";
-
-        SolutionResult Solver(Func<string> SolverFunction)
+        SolutionResult SolveSafely(Func<string> SolverFunction)
         {
             if (Debug)
             {
