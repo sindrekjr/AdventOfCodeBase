@@ -124,7 +124,7 @@ Simply swap out the target framework in `AdventOfCode.csproj`.
 ```
 
 ### Automatic Debugger Break On Exception
-When running your Solutions with a Debugger attached e.g. [VSCode](https://code.visualstudio.com/docs/editor/debugging) or [Visual Studio](https://docs.microsoft.com/en-us/visualstudio/debugger/quickstart-debug-with-managed?view=vs-2019) the ASolution base class will try to pause/break the debugger when there is an uncaught Exception thrown by your solution part. This allows for inspection with the debugger without having to specifically set-up additional exception handling within the debugger or your solution.
+When running your Solutions with a Debugger attached e.g. [VSCode](https://code.visualstudio.com/docs/editor/debugging) or [Visual Studio](https://docs.microsoft.com/en-us/visualstudio/debugger/quickstart-debug-with-managed?view=vs-2019) the BaseSolution base class will try to pause/break the debugger when there is an uncaught Exception thrown by your solution part. This allows for inspection with the debugger without having to specifically set-up additional exception handling within the debugger or your solution.
 
 ## Background
 I intended to use Advent of Code 2019 to learn C#, and found that I wanted to try to put together a small solutions framework of my own. In that way this template came about as an introductory project to C# and .NET Core.
