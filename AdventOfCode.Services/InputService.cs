@@ -10,8 +10,8 @@ namespace AdventOfCode.Services
 
         public static string FetchInput(int day, int year)
         {
-            string INPUT_FILEPATH = GetYearPath(year) + $"/{day:D2}";
-            string INPUT_URL = GetAocInputUrl(day, year);
+            string INPUT_FILEPATH = GetInputStorePath(year, day) + "/input";
+            string INPUT_URL = GetAocInputUrl(year, day);
             string input = "";
 
             if (File.Exists(INPUT_FILEPATH) && new FileInfo(INPUT_FILEPATH).Length > 0)
@@ -66,15 +66,15 @@ namespace AdventOfCode.Services
 
         public static string FetchDebugInput(int day, int year)
         {
-            string INPUT_FILEPATH = GetYearPath(year) + $"/{day:D2}debug";
+            string INPUT_FILEPATH = GetInputStorePath(year, day) + "/debug";
             return (File.Exists(INPUT_FILEPATH) && new FileInfo(INPUT_FILEPATH).Length > 0)
                 ? File.ReadAllText(INPUT_FILEPATH)
                 : "";
         }
 
-        static string GetYearPath(int year) =>
-            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"../../../AdventOfCode.Solutions/Year{year}/inputs"));
+        static string GetInputStorePath(int year, int day) =>
+            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"../../inputs/Year{year}/Day{day:D2}"));
 
-        static string GetAocInputUrl(int day, int year) => $"https://adventofcode.com/{year}/day/{day}/input";
+        static string GetAocInputUrl(int year, int day) => $"https://adventofcode.com/{year}/day/{day}/input";
     }
 }
