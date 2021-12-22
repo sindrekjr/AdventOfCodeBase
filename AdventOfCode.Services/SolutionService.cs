@@ -17,10 +17,12 @@ namespace AdventOfCode.Services
 
             foreach (int day in days)
             {
-                var solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day.ToString("D2")}");
+                var solution = Type.GetType($"AdventOfCode.Solutions.Year{year}.Day{day:D2}");
+
                 if (solution != null)
                 {
-                    yield return (ISolution)Activator.CreateInstance(solution);
+                    var iSolution = Activator.CreateInstance(solution) as ISolution;
+                    if (iSolution != null) yield return iSolution;
                 }
             }
         }

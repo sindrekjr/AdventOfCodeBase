@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Services.Models
 {
-    class Config
+    struct Config
     {
         string _c;
         int _y;
@@ -54,37 +50,13 @@ namespace AdventOfCode.Services.Models
             }
         }
 
-        void setDefaults()
+        public void setDefaults()
         {
             //Make sure we're looking at EST, or it might break for most of the US
             DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
             if (Cookie == default(string)) Cookie = "";
             if (Year == default(int)) Year = CURRENT_EST.Year;
             if (Days == default(int[])) Days = (CURRENT_EST.Month == 12 && CURRENT_EST.Day <= 25) ? new int[] { CURRENT_EST.Day } : new int[] { 0 };
-        }
-
-        public static Config Get(string path)
-        {
-            var options = new JsonSerializerOptions()
-            {
-                IgnoreNullValues = true,
-                PropertyNameCaseInsensitive = true,
-                WriteIndented = true
-            };
-            Config config;
-            if (File.Exists(path))
-            {
-                config = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), options);
-                config.setDefaults();
-            }
-            else
-            {
-                config = new Config();
-                config.setDefaults();
-                File.WriteAllText(path, JsonSerializer.Serialize<Config>(config, options));
-            }
-
-            return config;
         }
     }
 
