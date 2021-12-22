@@ -12,18 +12,16 @@ namespace AdventOfCode.Solutions
 {
     public abstract class SolutionBase
     {
-        Lazy<string> _input, _debugInput;
-        Lazy<SolutionResult> _part1, _part2;
-
         public int Day { get; }
         public int Year { get; }
         public string Title { get; }
-        public string Input => Debug ? DebugInput : _input.Value ?? null;
-        public SolutionResult Part1 => _part1.Value;
-        public SolutionResult Part2 => _part2.Value;
-
-        public string DebugInput => _debugInput.Value ?? null;
         public bool Debug { get; set; }
+        public string? Input => InputService.FetchInput(Day, Year);
+        public string? DebugInput => InputService.FetchDebugInput(Day, Year);
+
+        public SolutionResult Part1 => SolveSafely(SolvePartOne);
+        public SolutionResult Part2 => SolveSafely(SolvePartTwo);
+
 
         private protected SolutionBase(int day, int year, string title, bool useDebugInput = false)
         {
@@ -31,10 +29,6 @@ namespace AdventOfCode.Solutions
             Year = year;
             Title = title;
             Debug = useDebugInput;
-            _input = new Lazy<string>(() => InputService.FetchInput(Day, Year));
-            _debugInput = new Lazy<string>(() => InputService.FetchDebugInput(Day, Year));
-            _part1 = new Lazy<SolutionResult>(() => SolveSafely(SolvePartOne));
-            _part2 = new Lazy<SolutionResult>(() => SolveSafely(SolvePartTwo));
         }
 
         public IEnumerable<SolutionResult> Solve(int part = 0)

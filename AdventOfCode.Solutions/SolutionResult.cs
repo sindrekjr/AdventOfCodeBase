@@ -1,6 +1,6 @@
 namespace AdventOfCode.Solutions
 {
-    public class SolutionResult
+    public struct SolutionResult
     {
         public string Answer { get; set; }
         public TimeSpan Time { get; set; }
