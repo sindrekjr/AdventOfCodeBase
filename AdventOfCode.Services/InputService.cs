@@ -10,7 +10,7 @@ namespace AdventOfCode.Services
 
         public static string FetchInput(int day, int year)
         {
-            string INPUT_FILEPATH = GetInputStorePath(year, day) + "/input";
+            string INPUT_FILEPATH = GetSolutionPath(year, day) + "/input";
             string INPUT_URL = GetAocInputUrl(year, day);
             string input = "";
 
@@ -25,16 +25,23 @@ namespace AdventOfCode.Services
                     DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
                     if (CURRENT_EST < new DateTime(year, 12, day)) throw new InvalidOperationException();
 
-                    using (var client = new WebClient())
+                    using (var client = new HttpClient())
                     {
-                        client.Headers.Add(HttpRequestHeader.Cookie, cookie);
-                        input = client.DownloadString(INPUT_URL).Trim();
-                        File.WriteAllText(INPUT_FILEPATH, input);
+                        var request = new HttpRequestMessage
+                        {
+                            RequestUri = new Uri(INPUT_URL),
+                            Method = HttpMethod.Get,
+                        };
+                        request.Headers.Add("Cookie", cookie);
+
+                        var response = client.SendAsync(request).Result;
+
+                        File.WriteAllText(INPUT_FILEPATH, response.Content.ReadAsStringAsync().Result);
                     }
                 }
-                catch (WebException e)
+                catch (HttpRequestException e)
                 {
-                    var statusCode = ((HttpWebResponse)e.Response).StatusCode;
+                    var statusCode = e.StatusCode;
                     var colour = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     if (statusCode == HttpStatusCode.BadRequest)
@@ -66,14 +73,14 @@ namespace AdventOfCode.Services
 
         public static string FetchDebugInput(int day, int year)
         {
-            string INPUT_FILEPATH = GetInputStorePath(year, day) + "/debug";
+            string INPUT_FILEPATH = GetSolutionPath(year, day) + "/debug";
             return (File.Exists(INPUT_FILEPATH) && new FileInfo(INPUT_FILEPATH).Length > 0)
                 ? File.ReadAllText(INPUT_FILEPATH)
                 : "";
         }
 
-        static string GetInputStorePath(int year, int day) =>
-            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"../../inputs/Year{year}/Day{day:D2}"));
+        static string GetSolutionPath(int year, int day) =>
+            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"../../../AdventOfCode.Solutions/Year{year}/Day{day:D2}"));
 
         static string GetAocInputUrl(int year, int day) => $"https://adventofcode.com/{year}/day/{day}/input";
     }

@@ -81,8 +81,8 @@ namespace AdventOfCode.Solutions
 
         public override string ToString() =>
             $"--- Day {Day}: {Title} --- {(Debug ? "!! Debug mode active, using DebugInput !!" : "")}\n"
-            + $"{ResultToString(1, Part1)}"
-            + $"{ResultToString(2, Part2)}";
+            + $"{ResultToString(1, Part1)}\n"
+            + $"{ResultToString(2, Part2)}\n";
 
         string ResultToString(int part, SolutionResult result) =>
             $"  - Part{part} => " + (string.IsNullOrEmpty(result.Answer) 
