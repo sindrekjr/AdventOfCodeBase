@@ -6,6 +6,8 @@ namespace AdventOfCode.Services
 {
     public static class InputService
     {
+        readonly static HttpClientHandler handler = new HttpClientHandler { UseCookies = true };
+        readonly static HttpClient client = new HttpClient(handler);
         readonly static string cookie = ConfigService.GetCookie();
 
         public static string FetchInput(int day, int year)
@@ -25,19 +27,20 @@ namespace AdventOfCode.Services
                     DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
                     if (CURRENT_EST < new DateTime(year, 12, day)) throw new InvalidOperationException();
 
-                    using (var client = new HttpClient())
+                    handler.CookieContainer.Add(new Cookie { Name = "session", Domain = ".adventofcode.com", Value = cookie });
+
+                    var request = new HttpRequestMessage
                     {
-                        var request = new HttpRequestMessage
-                        {
-                            RequestUri = new Uri(INPUT_URL),
-                            Method = HttpMethod.Get,
-                        };
-                        request.Headers.Add("Cookie", cookie);
+                        RequestUri = new Uri(INPUT_URL),
+                        Method = HttpMethod.Get,
+                    };
 
-                        var response = client.SendAsync(request).Result;
+                    var response = client.SendAsync(request).Result;
+                    response.EnsureSuccessStatusCode();
 
-                        File.WriteAllText(INPUT_FILEPATH, response.Content.ReadAsStringAsync().Result);
-                    }
+                    input = response.Content.ReadAsStringAsync().Result;
+
+                    File.WriteAllText(INPUT_FILEPATH, input);
                 }
                 catch (HttpRequestException e)
                 {
