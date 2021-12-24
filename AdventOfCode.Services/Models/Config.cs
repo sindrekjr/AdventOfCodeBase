@@ -15,7 +15,7 @@ namespace AdventOfCode.Services.Models
             get => _c;
             set
             {
-                if (Regex.IsMatch(value, "^session=[a-z0-9]+$")) _c = value;
+                if (Regex.IsMatch(value, "^[a-z0-9]+$")) _c = value;
             }
         }
         public int Year
