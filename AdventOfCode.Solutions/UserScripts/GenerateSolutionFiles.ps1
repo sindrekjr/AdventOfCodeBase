@@ -3,14 +3,11 @@
 )
 
 $template = @"
-namespace AdventOfCode.Solutions.Year<YEAR>
+namespace AdventOfCode.Solutions.Year<YEAR>.Day<DAY>
 {
-    class Day<DAY> : SolutionBase
+    class Solution : SolutionBase
     {
-        public Day<DAY>() : base(<DAY>, <YEAR>, `"`")
-        {
-
-        }
+        public Solution() : base(<DAY>, <YEAR>, `"`") { }
 
         protected override string SolvePartOne()
         {
@@ -33,7 +30,7 @@ if(!(Test-Path $newDirectory)) {
 }
 
 for($i = 1; $i -le 25; $i++) {
-    $newFile = [IO.Path]::Combine($newDirectory, "Day$("{0:00}" -f $i).cs")
+    $newFile = [IO.Path]::Combine($newDirectory, "Day$("{0:00}" -f $i)", "Solution.cs")
     if(!(Test-Path $newFile)) {
         New-Item $newFile -ItemType File -Value ($template -replace "<YEAR>", $Year -replace "<DAY>", "$("{0:00}" -f $i)") -Force | Out-Null
     }
