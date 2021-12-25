@@ -343,3 +343,5 @@ ASALocalRun/
 config.json
 AdventOfCode/Solutions/Year*/Day*/debug
 AdventOfCode/Solutions/Year*/Day*/input
+
+.ionide
