@@ -3,27 +3,26 @@
 )
 
 $template = @"
-namespace AdventOfCode.Solutions.Year<YEAR>.Day<DAY>
+namespace AdventOfCode.Solutions.Year<YEAR>.Day<DAY>;
+
+class Solution : SolutionBase
 {
-    class Solution : SolutionBase
+    public Solution() : base(<DAY>, <YEAR>, `"`") { }
+
+    protected override string SolvePartOne()
     {
-        public Solution() : base(<DAY>, <YEAR>, `"`") { }
+        return "";
+    }
 
-        protected override string SolvePartOne()
-        {
-            return "";
-        }
-
-        protected override string SolvePartTwo()
-        {
-            return "";
-        }
+    protected override string SolvePartTwo()
+    {
+        return "";
     }
 }
 
 "@
 
-$newDirectory = [IO.Path]::Combine($PSScriptRoot, "..", "Year$Year")
+$newDirectory = [IO.Path]::Combine($PSScriptRoot, "AdventOfCode.Solutions", "Year$Year")
 
 if(!(Test-Path $newDirectory)) {
     New-Item $newDirectory -ItemType Directory | Out-Null
