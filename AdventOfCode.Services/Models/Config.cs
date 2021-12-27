@@ -64,10 +64,27 @@ class DaysConverter : JsonConverter<int[]>
 {
     public override int[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.Number) return new int[] { reader.GetInt16() };
-        var tokens = reader.TokenType == JsonTokenType.String
-            ? new string[] { reader.GetString() }
-            : JsonSerializer.Deserialize<object[]>(ref reader).Select<object, string>(o => o.ToString());
+        IEnumerable<string> tokens;
+
+        switch (reader.TokenType)
+        {
+            case JsonTokenType.Number:
+                return new int[] { reader.GetInt16() };
+
+            case JsonTokenType.String:
+                tokens = new string[] { reader.GetString() ?? "" };
+                break;
+
+            default:
+                var obj = JsonSerializer
+                    .Deserialize<object[]>(ref reader);
+
+                tokens = obj != null
+                    ? obj.Select<object, string>(o => o.ToString() ?? "")
+                    : new string[] { };
+                break;
+        }
+
         return tokens.SelectMany<string, int>(ParseString).ToArray();
     }
 
