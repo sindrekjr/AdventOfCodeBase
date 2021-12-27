@@ -3,6 +3,7 @@ global using System.Collections;
 global using System.Collections.Generic;
 global using System.Linq;
 global using System.Text;
+global using AdventOfCode.Solutions.Utils;
 
 using System.Diagnostics;
 using System.Net;
@@ -21,7 +22,6 @@ public abstract class SolutionBase
 
     public SolutionResult Part1 => Solve(1);
     public SolutionResult Part2 => Solve(2);
-
 
     private protected SolutionBase(int day, int year, string title, bool useDebugInput = false)
     {
