@@ -16,11 +16,11 @@ namespace AdventOfCode.Solutions
         public int Year { get; }
         public string Title { get; }
         public bool Debug { get; set; }
-        public string? Input => LoadInput().Result;
-        public string? DebugInput => LoadDebugInput();
+        public string Input => LoadInput(Debug);
+        public string DebugInput => LoadInput(true);
 
-        public SolutionResult Part1 => SolveSafely(SolvePartOne);
-        public SolutionResult Part2 => SolveSafely(SolvePartTwo);
+        public SolutionResult Part1 => Solve(1);
+        public SolutionResult Part2 => Solve(2);
 
 
         private protected SolutionBase(int day, int year, string title, bool useDebugInput = false)
@@ -31,20 +31,21 @@ namespace AdventOfCode.Solutions
             Debug = useDebugInput;
         }
 
-        public IEnumerable<SolutionResult> Solve(int part = 0)
+        public IEnumerable<SolutionResult> SolveAll()
         {
-            if (part != 2 && (part == 1 || !string.IsNullOrEmpty(Part1.Answer)))
-            {
-                yield return Part1;
-            }
-
-            if (part != 1 && (part == 2 || !string.IsNullOrEmpty(Part2.Answer)))
-            {
-                yield return Part2;
-            }
+            yield return Solve(SolvePartOne);
+            yield return Solve(SolvePartTwo);
         }
 
-        SolutionResult SolveSafely(Func<string> SolverFunction)
+        public SolutionResult Solve(int part = 1)
+        {
+            if (part == 1) return Solve(SolvePartOne);
+            if (part == 2) return Solve(SolvePartTwo);
+
+            throw new InvalidOperationException("Invalid part param supplied.");
+        }
+
+        SolutionResult Solve(Func<string> SolverFunction)
         {
             if (Debug)
             {
@@ -63,7 +64,9 @@ namespace AdventOfCode.Solutions
                 var then = DateTime.Now;
                 var result = SolverFunction();
                 var now = DateTime.Now;
-                return string.IsNullOrEmpty(result) ? SolutionResult.Empty : new SolutionResult { Answer = result, Time = now - then };
+                return string.IsNullOrEmpty(result)
+                    ? SolutionResult.Empty
+                    : new SolutionResult { Answer = result, Time = now - then };
             }
             catch (Exception)
             {
@@ -79,33 +82,22 @@ namespace AdventOfCode.Solutions
             }
         }
 
-        static HttpClientHandler handler = new HttpClientHandler { UseCookies = true };
-        static HttpClient client = new HttpClient(handler);
-
-        async Task<string> LoadInput()
+        string LoadInput(bool debug = false)
         {
-            var inputFilepath = $"./AdventOfCode.Solutions/Year{Year}/Day{Day:D2}/input";
-            var inputUri = new Uri($"https://adventofcode.com/{Year}/day/{Day}/input");
+            var inputFilepath =
+                $"./AdventOfCode.Solutions/Year{Year}/Day{Day:D2}/{(debug ? "debug" : "input")}";
 
             if (File.Exists(inputFilepath) && new FileInfo(inputFilepath).Length > 0)
             {
                 return File.ReadAllText(inputFilepath);
             }
 
+            if (debug) return "";
+
             try
             {
-                var currentEst = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
-                if (currentEst < new DateTime(Year, 12, Day)) throw new InvalidOperationException("Too early.");
-
-                handler.CookieContainer.Add(new Cookie { Name = "session", Domain = ".adventofcode.com", Value = ConfigService.GetCookie() });
-                var request = new HttpRequestMessage { RequestUri = inputUri, Method = HttpMethod.Get };
-
-                var response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-
-                var input = await response.Content.ReadAsStringAsync();
+                var input = AdventOfCodeService.FetchInput(Year, Day).Result;
                 File.WriteAllText(inputFilepath, input);
-
                 return input;
             }
             catch (HttpRequestException e)
@@ -140,14 +132,6 @@ namespace AdventOfCode.Solutions
             return "";
         }
 
-        string LoadDebugInput()
-        {
-            string inputFilepath = $"./AdventOfCode.Solutions/Year{Year}/Day{Day:D2}/debug";
-            return (File.Exists(inputFilepath) && new FileInfo(inputFilepath).Length > 0)
-                ? File.ReadAllText(inputFilepath)
-                : "";
-        }
-
         public override string ToString() =>
             $"--- Day {Day}: {Title} --- {(Debug ? "!! Debug mode active, using DebugInput !!" : "")}\n"
             + $"{ResultToString(1, Part1)}\n"
@@ -160,5 +144,13 @@ namespace AdventOfCode.Solutions
 
         protected abstract string SolvePartOne();
         protected abstract string SolvePartTwo();
+    }
+
+    public struct SolutionResult
+    {
+        public string Answer { get; set; }
+        public TimeSpan Time { get; set; }
+
+        public static SolutionResult Empty => new SolutionResult();
     }
 }
