@@ -20,7 +20,7 @@ Template project for solving Advent of Code in C#, running on [.NET 6.0](https:/
 * Supports easily switching between debug-input and real input.
 * Naive benchmarking, showing as millisecond count.
 
-## Getting started
+## Usage
 
 ### Creating a repository
 To get started using this template, click the green "Use this template" button above (or [this link](https://github.com/sindrekjr/AdventOfCodeBase/generate)) to create a new repository of your own from it.
