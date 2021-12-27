@@ -4,7 +4,7 @@ using AdventOfCode.Services.Models;
 
 namespace AdventOfCode.Services
 {
-    public static class ConfigService
+    public static class ConfigurationService
     {
         static Config Config = GetConfig();
 
