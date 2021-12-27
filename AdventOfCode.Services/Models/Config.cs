@@ -1,62 +1,24 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Services.Models;
 
 struct Config
 {
-    string _c;
-    int _y;
-    int[] _d;
+    public string Cookie { get; set; }
 
-    public string Cookie
-    {
-        get => _c;
-        set
-        {
-            if (Regex.IsMatch(value, "^[a-z0-9]+$")) _c = value;
-        }
-    }
-    public int Year
-    {
-        get => _y;
-        set
-        {
-            if (value >= 2015 && value <= DateTime.Now.Year) _y = value;
-        }
-    }
+    public int Year { get; set; }
+    
     [JsonConverter(typeof(DaysConverter))]
-    public int[] Days
-    {
-        get => _d;
-        set
-        {
-            bool allDaysCovered = false;
-            _d = value.Where(v =>
-            {
-                if (v == 0) allDaysCovered = true;
-                return v > 0 && v < 26;
-            }).ToArray();
-
-            if (allDaysCovered)
-            {
-                _d = new int[] { 0 };
-            }
-            else
-            {
-                Array.Sort(_d);
-            }
-        }
-    }
+    public int[] Days { get; set; }
 
     public void setDefaults()
     {
         //Make sure we're looking at EST, or it might break for most of the US
-        DateTime CURRENT_EST = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
+        var currentEst = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc).AddHours(-5);
         if (Cookie == default(string)) Cookie = "";
-        if (Year == default(int)) Year = CURRENT_EST.Year;
-        if (Days == default(int[])) Days = (CURRENT_EST.Month == 12 && CURRENT_EST.Day <= 25) ? new int[] { CURRENT_EST.Day } : new int[] { 0 };
+        if (Year == default(int)) Year = currentEst.Year;
+        if (Days == default(int[])) Days = (currentEst.Month == 12 && currentEst.Day <= 25) ? new int[] { currentEst.Day } : new int[] { 0 };
     }
 }
 
@@ -85,7 +47,10 @@ class DaysConverter : JsonConverter<int[]>
                 break;
         }
 
-        return tokens.SelectMany<string, int>(ParseString).ToArray();
+        var days = tokens.SelectMany<string, int>(ParseString);
+        if (days.Contains(0)) return new[] { 0 };
+
+        return days.Where(v => v < 26 && v > 0).OrderBy(day => day).ToArray();
     }
 
     private IEnumerable<int> ParseString(string str)
