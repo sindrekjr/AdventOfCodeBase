@@ -31,7 +31,7 @@ If any solution files that you need are not already included, see **[Generating 
 Create a new file named `config.json` at the root of the project.
 ```json
 {
-  "cookie": "session=c0nt3nt",
+  "cookie": "c0nt3nt",
   "year": 2020,
   "days": [0] 
 }
