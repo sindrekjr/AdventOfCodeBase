@@ -1,13 +1,7 @@
-using AdventOfCode.Services;
-
 namespace AdventOfCode.Solutions;
 
 public static class SolutionCollector
 {
-    public static IEnumerable<SolutionBase> FetchSolutions() => FetchSolutions(ConfigurationService.GetYear(), ConfigurationService.GetDays());
-
-    public static IEnumerable<SolutionBase> FetchSolutions(int year) => FetchSolutions(year, ConfigurationService.GetDays());
-
     public static IEnumerable<SolutionBase> FetchSolutions(int year, IEnumerable<int> days)
     {
         if (days.Sum() == 0) days = Enumerable.Range(1, 25).ToArray();
