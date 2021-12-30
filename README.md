@@ -53,10 +53,9 @@ The field supports list comprehension syntax and strings, meaning the following 
 ### Running the project
 Write your advent of code solutions in the appropriate solution classes, `AdventOfCode.Solutions/Year<YYYY>/Day<DD>/Solution.cs`.
 
-Then run the project. From the command line you can do as follows.
+Then run the project. From the command line you can use `dotnet run`, and optionally specify a day inline. For example, to run your solution for day 21:
 ```
-> dotnet build
-> dotnet run
+dotnet run 21
 ```
 
 ### Example solution
