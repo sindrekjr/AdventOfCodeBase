@@ -1,5 +1,5 @@
 # AdventOfCodeBase
-Template project for solving Advent of Code in C#, running on [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0).
+Template project for solving Advent of Code in C#, running on [.NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0).
 
 - [Features](#features)
 - [Usage](#usage)
@@ -8,7 +8,7 @@ Template project for solving Advent of Code in C#, running on [.NET 6.0](https:/
   - [Running the project](#running-the-project)
   - [Example solution](#example-solution)
 - [Notes](#notes)
-  - [Generating Previous Year's Solution Files](#generating-previous-years-solution-files)
+  - [Generating Solution Files](#generating-solution-files)
   - [Automatic Debugger Break On Exception](#automatic-debugger-break-on-exception)
 - [Background](#background)
 - [Contributing](#contributing)
@@ -86,12 +86,23 @@ class Solution : SolutionBase
 ```
 
 ## Notes
-### Generating Previous Year's Solution Files
-Use the included PowerShell script `GenerateSolutionFiles.ps1` to generate a year's solution files following the same layout as those already included.
+### Generating Solution Files
 
-Usage: `GenerateSolutionFiles.ps1 [-Year <Int>]`
+Solution files can be automatically generated via GNU Make or PowerShell, and both methods use the included file `solution.template`, which is customisable. Both options default to current YEAR and all DAYS (1-25).
 
-If no value is provided it will generate files for the current year. The script will avoid overwriting existing files.  
+#### GNU Make
+
+```bash
+$ make solution-files [,YEAR] [,DAYS]
+```
+
+Requires GNU Make v4 or later.
+
+#### PowerShell
+
+```pwsh
+> GenerateSolutionFiles.ps1 [-Year <Int>]
+```
 
 Requires PowerShell v3 or later due to the way `$PSScriptRoot` behaves. If you have Windows 8+ you should be set. Upgrades for previous versions, and installs for macOS and Linux can be found in [Microsoft's Powershell Documentation](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1)
 
