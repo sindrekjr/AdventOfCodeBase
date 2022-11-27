@@ -2,25 +2,7 @@
     [int]$Year = (Get-Date).Year
 )
 
-$template = @"
-namespace AdventOfCode.Solutions.Year<YEAR>.Day<DAY>;
-
-class Solution : SolutionBase
-{
-    public Solution() : base(<DAY>, <YEAR>, `"`") { }
-
-    protected override string SolvePartOne()
-    {
-        return "";
-    }
-
-    protected override string SolvePartTwo()
-    {
-        return "";
-    }
-}
-
-"@
+$template = Get-Content -Raw .\solution.template
 
 $newDirectory = [IO.Path]::Combine($PSScriptRoot, "AdventOfCode.Solutions", "Year$Year")
 
