@@ -27,7 +27,7 @@ public static class StringUtils
         {
             var result = new List<int>();
             foreach (char c in str) if (int.TryParse(c.ToString(), out int n)) result.Add(n);
-            return result.ToArray();
+            return [.. result];
         }
         else
         {
@@ -45,7 +45,7 @@ public static class StringUtils
         {
             var result = new List<long>();
             foreach (char c in str) if (long.TryParse(c.ToString(), out long n)) result.Add(n);
-            return result.ToArray();
+            return [.. result];
         }
         else
         {

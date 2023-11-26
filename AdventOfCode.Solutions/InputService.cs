@@ -1,16 +1,16 @@
 using System.Net;
 
-namespace AdventOfCode.Services;
+namespace AdventOfCode.Solutions;
 
-public static class AdventOfCodeService
+public static class InputService
 {
-    private static HttpClientHandler handler = new HttpClientHandler
+    private static readonly HttpClientHandler _handler = new()
     {
         CookieContainer = GetCookieContainer(),
         UseCookies = true,
     };
 
-    private static HttpClient client = new HttpClient(handler)
+    private static readonly HttpClient _client = new(_handler)
     {
         BaseAddress = new Uri("https://adventofcode.com/"),
     };
@@ -23,7 +23,7 @@ public static class AdventOfCodeService
             throw new InvalidOperationException("Too early to get puzzle input.");
         }
 
-        var response = await client.GetAsync($"{year}/day/{day}/input");
+        var response = await _client.GetAsync($"{year}/day/{day}/input");
         return await response.EnsureSuccessStatusCode().Content.ReadAsStringAsync();
     }
 
@@ -34,7 +34,7 @@ public static class AdventOfCodeService
         {
             Name = "session",
             Domain = ".adventofcode.com",
-            Value = ConfigurationService.GetCookie(),
+            Value = Config.Get().Cookie.Replace("session=", ""),
         });
 
         return container;

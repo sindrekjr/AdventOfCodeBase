@@ -7,18 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="AdventOfCode.Services\**" />
-    <Compile Remove="AdventOfCode.Solutions\**" />
-    <EmbeddedResource Remove="AdventOfCode.Services\**" />
-    <EmbeddedResource Remove="AdventOfCode.Solutions\**" />
-    <None Remove="AdventOfCode.Services\**" />
-    <None Remove="AdventOfCode.Solutions\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="AdventOfCode.Services\AdventOfCode.Services.csproj" />
-    <ProjectReference Include="AdventOfCode.Solutions\AdventOfCode.Solutions.csproj" />
-  </ItemGroup>
-
 </Project>
