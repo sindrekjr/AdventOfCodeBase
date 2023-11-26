@@ -1,5 +1,5 @@
 # AdventOfCodeBase
-Template project for solving Advent of Code in C#, running on [.NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0).
+Template project for solving Advent of Code in C#, running on [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 - [Features](#features)
 - [Usage](#usage)
