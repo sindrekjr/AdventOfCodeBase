@@ -6,7 +6,7 @@ endef
 YEAR ?= $(shell date +%Y)
 DAYS ?= $(shell seq 1 25)
 
-TEMPLATE := $(subst <YEAR>,$(YEAR),$(subst $(newline),\n,$(file < solution.template)))
+TEMPLATE := $(subst <YEAR>,$(YEAR),$(subst $(newline),\n,$(file < ./templates/solution.cs.template)))
 DIRECTORY := "$(shell pwd)/AdventOfCode.Solutions/Year$(YEAR)"
 
 solutions-files: $(DAYS)

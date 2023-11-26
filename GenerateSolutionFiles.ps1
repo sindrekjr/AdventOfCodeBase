@@ -2,7 +2,7 @@
     [int]$Year = (Get-Date).Year
 )
 
-$template = Get-Content -Raw .\solution.template
+$template = Get-Content -Raw .\templates\solution.cs.template
 
 $newDirectory = [IO.Path]::Combine($PSScriptRoot, "AdventOfCode.Solutions", "Year$Year")
 
